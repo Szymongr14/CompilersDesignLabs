@@ -26,7 +26,7 @@
 %token <i> INTEGER_CONST
 %token <d> REAL_CONST
 /* operators */
-%token <I> ASSIGN LE GE NEQ
+%token <I> ASSIGN LE GE NEQ RANGE
 /* other */
 %token <s> IDENT
 
@@ -56,7 +56,7 @@ KEYWORD: KW_AND | KW_BEGIN | KW_CONST | KW_DIV | KW_DO | KW_ELSE | KW_ELSIF
 LITERAL_VALUE: STRING_CONST | INTEGER_CONST | REAL_CONST | CHAR_CONST
 ;
 
-OPERATOR: ASSIGN | LE | GE | NEQ
+OPERATOR: ASSIGN | LE | GE | NEQ | RANGE
 ;
 
 OTHER: IDENT | ',' | ';' | '=' | ':' | '(' | ')' | '+' | '*' | '-' | '.' | '|'
@@ -67,7 +67,7 @@ OTHER: IDENT | ',' | ';' | '=' | ':' | '(' | ')' | '+' | '*' | '-' | '.' | '|'
 
 int main( void )
 { 
-	printf( "Imie i Nazwisko\n" );
+	printf( "Szymon Groszkowski\n" );
 	printf( "yytext              Typ tokena         Wartosc tokena znakowo\n\n" );
 	yyparse();
 	return( 0 ); // OK

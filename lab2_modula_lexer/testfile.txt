@@ -1,0 +1,9 @@
+"elo"
+DOWNTO
+BEGIN
+(* witam *)
+MODULE eolofdkjfd
+34242
+43.34E-3
+'adsfsw'
+
