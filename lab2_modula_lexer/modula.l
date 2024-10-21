@@ -16,6 +16,8 @@ char *strnncpy(char *dst, const char *src, const int n);
 %x ST_CHAR
 
  /* pomocnicze */
+ int start_comment_line;
+ int comment_finished = 1;
 
 %%
 
@@ -75,7 +77,7 @@ DOWNTO return process_token(yytext, "KW_DOWNTO", "", KW_DOWNTO);
 
  /* I. recognition of character constants in apostrophes without start conditions */
 \'.\' return process_token(yytext, "CHAR_CONST", yytext, CHAR_CONST);
-\'.{2,}\' { printf("Lexical error in line: %d. Expression: %s", yylineno, yytext); }
+ /* \'.{2,}\' { printf("Lexical error in line: %d. Expression: %s", yylineno, yytext); }*/
 
  /* J. recognition of one-character tokens: operators and punctuation */
 [,;=:()+*-.|<[\]] return process_token(yytext, yytext, "", yytext[0]);
@@ -97,19 +99,37 @@ DOWNTO return process_token(yytext, "KW_DOWNTO", "", KW_DOWNTO);
     return process_token(yytext, "CHAR_CONST", yytext, CHAR_CONST);
 }
 
-<ST_CHAR>[^'\n]{2,} {
-    printf("Lexical error in line: %d. Invalid character constant: %s\n", yylineno, yytext);
-    BEGIN(INITIAL);
-}
+ /* <ST_CHAR>[^'\n]{2,} { */
+    /* printf("Lexical error in line: %d. Invalid character constant: %s\n", yylineno, yytext); */
+    /* BEGIN(INITIAL); */
+ /* } */
 
  /* komentarze (na warunkach poczatkowych) */
- "(*" { BEGIN(ST_COMMENT); }
- <ST_COMMENT>"*)" { BEGIN(INITIAL); }
+ "(*" {
+     BEGIN(ST_COMMENT);
+      start_comment_line = yylineno;
+      comment_finished = 0;
+ }
+ <ST_COMMENT>"*)" {
+     BEGIN(INITIAL);
+      comment_finished = 1;
+ }
  <ST_COMMENT>.|\n ;
+
+ /* N. detection of comment end sequence without the beginning sequence using start conditions */
+ <INITIAL>"*)" {
+   printf("Lexical error in line: %d. Closing comment sequence without starting sequence detected: %s\n", yylineno, yytext);
+ }
+
+ /* O. detection of failure to close a comment with indications of the line where the comment begins */
+
 
 %%
 
 int yywrap() {
+    if(comment_finished == 0){
+        printf("failure to close comment detected in line: %d", start_comment_line);
+    }
   return 1; /* konieczne!!! */
 }
 

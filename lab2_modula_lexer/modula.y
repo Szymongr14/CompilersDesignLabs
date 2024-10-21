@@ -68,7 +68,7 @@ OTHER: IDENT | ',' | ';' | '=' | ':' | '(' | ')' | '+' | '*' | '-' | '.' | '|'
 int main( void )
 { 
 	printf( "Szymon Groszkowski\n" );
-	printf( "yytext              Typ tokena         Wartosc tokena znakowo\n\n" );
+	printf( "yytext              Token Type         Token value as string\n\n" );
 	yyparse();
 	return( 0 ); // OK
 }
