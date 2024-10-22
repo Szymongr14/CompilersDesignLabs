@@ -121,14 +121,11 @@ DOWNTO return process_token(yytext, "KW_DOWNTO", "", KW_DOWNTO);
    printf("Lexical error in line: %d. Closing comment sequence without starting sequence detected: %s\n", yylineno, yytext);
  }
 
- /* O. detection of failure to close a comment with indications of the line where the comment begins */
-
-
 %%
 
 int yywrap() {
     if(comment_finished == 0){
-        printf("failure to close comment detected in line: %d", start_comment_line);
+        printf("Comment opened in line: %d not closed", start_comment_line);
     }
   return 1; /* konieczne!!! */
 }
