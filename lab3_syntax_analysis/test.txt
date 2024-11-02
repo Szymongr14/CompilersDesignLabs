@@ -1,0 +1,37 @@
+MODULE test;
+
+FROM InOut IMPORT Write, WriteCard, WriteString, WriteLn;
+CONST
+  FromAscii = 32;
+  ToAscii = 127;
+VAR
+  i : CARDINAL;
+  fl : REAL;
+  t : ARRAY[1 .. 10] OF CARDINAL;
+  d : RECORD
+       year, month : CARDINAL;
+       day : CARDINAL;
+  END;
+
+PROCEDURE ListAscii(StartCode, EndCode: CARDINAL; Precision: CARDINAL);
+VAR
+     i: CARDINAL;
+     t1 : ARRAY[1 .. 10] OF CARDINAL;
+     d : RECORD
+    year:            CARDINAL;
+    month, day     : CARDINAL;
+     END;
+BEGIN
+     WriteString("ASCII codes");
+     WriteLn;
+     FOR i := FromAscii TO ToAscii DO
+    WriteCard(i, 3);
+    Write(' ');
+    Write(CHR(i));
+    WriteLn
+     END;
+     t1[0] := t[0];
+     d.year := 2018
+END ListAscii;
+
+END test.
