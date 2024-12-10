@@ -1,0 +1,50 @@
+digraph "\"0(0|1)*0\"" {
+  rankdir=LR;
+  node[shape=circle];
+
+  subgraph "clustern" {
+    color=blue;
+    n3 [shape=doublecircle];
+    n [shape=plaintext, label=""]; // dummy state
+    n -> n4; // arc to the start state from nowhere
+    n4 -> n0 [label="0"];
+    n0 -> n1 [label="0"];
+    n0 -> n2 [label="1"];
+    n0 -> n3 [label="0"];
+    n1 -> n1 [label="0"];
+    n1 -> n2 [label="1"];
+    n1 -> n3 [label="0"];
+    n2 -> n1 [label="0"];
+    n2 -> n2 [label="1"];
+    n2 -> n3 [label="0"];
+    label="NFA"
+  }
+
+  subgraph "clusterd" {
+    color=blue;
+    d2 [shape=doublecircle];
+    d [shape=plaintext, label=""]; // dummy state
+    d -> d0; // arc to the start state from nowhere
+    d0 -> d1 [label="0"];
+    d1 -> d2 [label="0"];
+    d1 -> d3 [label="1"];
+    d2 -> d2 [label="0"];
+    d2 -> d3 [label="1"];
+    d3 -> d2 [label="0"];
+    d3 -> d3 [label="1"];
+    label="DFA"
+  }
+
+  subgraph "clusterm" {
+    color=blue;
+    m0 [shape=doublecircle];
+    m [shape=plaintext, label=""]; // dummy state
+    m -> m1; // arc to the start state from nowhere
+    m0 -> m0 [label="0"];
+    m0 -> m2 [label="1"];
+    m1 -> m2 [label="0"];
+    m2 -> m0 [label="0"];
+    m2 -> m2 [label="1"];
+    label="min DFA"
+  }
+}
